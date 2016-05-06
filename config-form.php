@@ -3,33 +3,6 @@
 <h2><?php echo __('Video Settings'); ?></h2>
     <div class="field">
         <div class="two columns alpha">
-            <?php echo $view->formLabel('video[options][width]', __('Width')); ?>
-        </div>
-        <div class="inputs five columns omega">
-            <?php echo $view->formText('video[options][width]', $video['options']['width']); ?>
-        </div>
-    </div>
-    <div class="field">
-        <div class="two columns alpha">
-            <?php echo $view->formLabel('video[options][height]', __('Height')); ?>
-        </div>
-        <div class="inputs five columns omega">
-            <?php echo $view->formText('video[options][height]', $video['options']['height']); ?>
-        </div>
-    </div>
-    <div class="field">
-        <div class="two columns alpha">
-            <?php echo $view->formLabel('video[options][responsive]', __('Responsive Sizing')); ?>
-        </div>
-        <div class="inputs five columns omega">
-            <p class="explanation">
-                <?php echo __('Check the box below to allow the video player to automatically match its size to its container.'); ?>
-            </p>
-            <?php echo $view->formCheckbox('video[options][responsive]', null, array('checked' => $video['options']['responsive'])); ?>
-        </div>
-    </div>
-    <div class="field">
-        <div class="two columns alpha">
             <?php echo $view->formLabel('video[types]', __('MIME Types')); ?>
         </div>
         <div class="inputs five columns omega">
@@ -47,25 +20,6 @@
 </div>
 <div id="html5-media-audio-settings">
     <h2><?php echo __('Audio Settings'); ?></h2>
-    <div class="field">
-        <div class="two columns alpha">
-            <?php echo $view->formLabel('audio[options][width]', __('Width')); ?>
-        </div>
-        <div class="inputs five columns omega">
-            <?php echo $view->formText('audio[options][width]', $audio['options']['width']); ?>
-        </div>
-    </div>
-    <div class="field">
-        <div class="two columns alpha">
-            <?php echo $view->formLabel('audio[options][responsive]', __('Responsive Sizing')); ?>
-        </div>
-        <div class="inputs five columns omega">
-            <p class="explanation">
-                <?php echo __('Check the box below to allow the audio player to automatically match its width to its container.'); ?>
-            </p>
-            <?php echo $view->formCheckbox('audio[options][responsive]', null, array('checked' => $audio['options']['responsive'])); ?>
-        </div>
-    </div>
     <div class="field">
         <div class="two columns alpha">
             <?php echo $view->formLabel('audio[types]', __('MIME Types')); ?>

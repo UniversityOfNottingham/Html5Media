@@ -14,11 +14,6 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $defaults = array(
             'video' => array(
-                'options' => array(
-                    'width' => 480,
-                    'height' => 270,
-                    'responsive' => false
-                ),
                 'types' => array(
                     'video/flv', 'video/x-flv', 'video/mp4', 'video/m4v',
                     'video/webm', 'video/wmv', 'video/quicktime'
@@ -26,10 +21,6 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
                 'extensions' => array('mp4', 'm4v', 'flv', 'webm', 'wmv'),
             ),
             'audio' => array(
-                'options' => array(
-                    'width' => 400,
-                    'responsive' => false
-                ),
                 'types' => array(
                     'audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav',
                     'audio/m4a', 'audio/wma', 'audio/mp4'
@@ -64,12 +55,6 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
             $this->hookInstall();
         }
         $settings = unserialize(get_option('html5_media_settings'));
-        if (version_compare($oldVersion, '2.1', '<')) {
-            $settings['audio']['options']['width'] = 400;
-        }
-        if (version_compare($oldVersion, '2.2', '<')) {
-            $settings['video']['options']['responsive'] = false;
-        }
         if (version_compare($oldVersion, '2.5', '<')) {
             $settings['common']['options']['preload'] = 'metadata';
             if(!in_array('audio/mp4', $settings['audio']['types'])) {
@@ -133,14 +118,10 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
         $settings = unserialize(get_option('html5_media_settings'));
         
         $audio = $_POST['audio'];
-        $settings['audio']['options']['width'] = (int) $audio['options']['width'];
-        $settings['audio']['options']['responsive'] = (bool) $audio['options']['responsive'];
         $settings['audio']['types'] = explode(',', $audio['types']);
         $settings['audio']['extensions'] = explode(',', $audio['extensions']);
 
         $video = $_POST['video'];
-        $settings['video']['options']['width'] = (int) $video['options']['width'];
-        $settings['video']['options']['height'] = (int) $video['options']['height'];
         $settings['video']['options']['responsive'] = (bool) $video['options']['responsive'];
         $settings['video']['types'] = explode(',', $video['types']);
         $settings['video']['extensions'] = explode(',', $video['extensions']);
@@ -204,13 +185,6 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
             $l10nScript = 'mejsL10n = ' . js_escape($l10n) . ';';
             queue_js_string($l10nScript);
         }
-
-        queue_js_file('mediaelement-and-player.min', 'mediaelement');
-        queue_css_file('mediaelementplayer', 'all', false, 'mediaelement');
-        queue_css_file('html5media', 'all');
-        if (is_admin_theme()) {
-            queue_css_file('html5media-mejs-overrides', 'all');
-        }
     }
 
     private static function _media($type, $file, $options)
@@ -221,20 +195,12 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
         $class = "html5media-player $type";
         $mediaOptions = '';
 
-        if (isset($options['width']))
-            $mediaOptions .= ' width="' . $options['width'] . '"';
-        if (isset($options['height']))
-            $mediaOptions .= ' height="' . $options['height'] . '"';
         if (isset($options['autoplay']) && $options['autoplay'])
             $mediaOptions .= ' autoplay';
         if (isset($options['controls']) && $options['controls'])
             $mediaOptions .= ' controls';
         if (isset($options['loop']) && $options['loop'])
             $mediaOptions .= ' loop';
-        if (isset($options['responsive']) && $options['responsive']) {
-            $mediaOptions .= ' style="width:100%;height:100%"';
-            $class .= ' responsive';
-        }
         if (isset($options['preload'])) {
             $mediaOptions .= ' preload="' . html_escape($options['preload']). '"';
         }
@@ -272,9 +238,6 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
 $tracks
 </$type>
 </div>
-<script type="text/javascript">
-jQuery('#html5-media-$i').mediaelementplayer();
-</script>
 HTML;
     }
 
