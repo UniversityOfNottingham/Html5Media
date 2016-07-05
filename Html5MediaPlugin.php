@@ -80,12 +80,12 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
             'mimeTypes' => $settings['audio']['types'],
             'fileExtensions' => $settings['audio']['extensions']
             ), 'Html5MediaPlugin::audio',
-            $commonOptions + $settings['audio']['options']);
+            $commonOptions);
         add_file_display_callback(array(
             'mimeTypes' => $settings['video']['types'],
             'fileExtensions' => $settings['video']['extensions']
             ), 'Html5MediaPlugin::video',
-            $commonOptions + $settings['video']['options']);
+            $commonOptions);
         add_file_display_callback(array(
             'mimeTypes' => $settings['text']['types'],
             'fileExtensions' => $settings['text']['extensions']
@@ -122,7 +122,6 @@ class Html5MediaPlugin extends Omeka_Plugin_AbstractPlugin
         $settings['audio']['extensions'] = explode(',', $audio['extensions']);
 
         $video = $_POST['video'];
-        $settings['video']['options']['responsive'] = (bool) $video['options']['responsive'];
         $settings['video']['types'] = explode(',', $video['types']);
         $settings['video']['extensions'] = explode(',', $video['extensions']);
 
